@@ -3,7 +3,7 @@
 ## install
 
 ```
-npm -g install gendiff-sergalexand
+npm -g install gendiff-saa
 ```
 [![Maintainability](https://api.codeclimate.com/v1/badges/b85586a6674552e401bf/maintainability)](https://codeclimate.com/github/SergAlexAnd/project-lvl2-s463/maintainability)
 [![Build Status](https://travis-ci.org/SergAlexAnd/project-lvl2-s463.svg?branch=master)](https://travis-ci.org/SergAlexAnd/project-lvl2-s463)
