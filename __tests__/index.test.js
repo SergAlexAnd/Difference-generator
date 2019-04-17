@@ -15,3 +15,12 @@ test('generateDiff json', () => {
     ),
   ).toBe(expected);
 });
+
+test('generateDiff yaml', () => {
+  expect(
+    generateDifference(
+      '__tests__/__fixtures__/before.yaml',
+      '__tests__/__fixtures__/after.yaml',
+    ),
+  ).toBe(expected);
+});

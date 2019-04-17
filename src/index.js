@@ -1,6 +1,5 @@
-import fs from 'fs';
 import _ from 'lodash';
-import path from 'path';
+import parse from './parsers';
 
 const generateKeys = (before, after) => {
   const beforeKeys = Object.keys(before);
@@ -46,8 +45,8 @@ const render = (keys) => {
 };
 
 const generateDifference = (firstConfig, secondConfig) => {
-  const before = JSON.parse(fs.readFileSync(path.resolve(firstConfig), 'UTF-8'));
-  const after = JSON.parse(fs.readFileSync(path.resolve(secondConfig), 'UTF-8'));
+  const before = parse(firstConfig);
+  const after = parse(secondConfig);
 
   const generatedKeys = generateKeys(before, after);
 
