@@ -7,20 +7,11 @@ beforeAll(() => {
   expected = fs.readFileSync('__tests__/__fixtures__/expected', 'UTF-8').trim();
 });
 
-test('generateDiff json', () => {
+test.each(['json', 'yaml', 'ini'])('generateDiff %s', (format) => {
   expect(
     generateDifference(
-      '__tests__/__fixtures__/before.json',
-      '__tests__/__fixtures__/after.json',
-    ),
-  ).toBe(expected);
-});
-
-test('generateDiff yaml', () => {
-  expect(
-    generateDifference(
-      '__tests__/__fixtures__/before.yaml',
-      '__tests__/__fixtures__/after.yaml',
+      `__tests__/__fixtures__/before.${format}`,
+      `__tests__/__fixtures__/after.${format}`,
     ),
   ).toBe(expected);
 });

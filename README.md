@@ -1,4 +1,4 @@
-# Вычислитель отличий!
+# Вычислитель отличий
 
 ## install
 
@@ -17,3 +17,7 @@ npm -g install gendiff-saa
 ## YAML
 
 [![asciicast](https://asciinema.org/a/iprvDA1nlrhTwF0Wt1ErBAtr1.svg)](https://asciinema.org/a/iprvDA1nlrhTwF0Wt1ErBAtr1)
+
+#ini
+
+[![asciicast](https://asciinema.org/a/M3BCp3Fu5IeJ4YQGEnFfezdBV.svg)](https://asciinema.org/a/M3BCp3Fu5IeJ4YQGEnFfezdBV)
