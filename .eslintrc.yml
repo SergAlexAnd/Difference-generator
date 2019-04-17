@@ -1,8 +1,13 @@
 ---
 
 # https://eslint.org/docs/user-guide/configuring#specifying-environments
+plugins:
+  - jest
+  - babel
+
 env:
   node: true
+  jest: true
 
 rules:
   no-console: 0
@@ -13,3 +18,4 @@ parser: babel-eslint
 
 extends:
   - 'airbnb-base'
+  - 'plugin:jest/recommended'
