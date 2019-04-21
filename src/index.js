@@ -1,5 +1,6 @@
 import _ from 'lodash';
 import parse from './parsers';
+import render from './renders';
 
 const generateKeys = (before, after) => {
   const beforeKeys = Object.keys(before);
@@ -13,6 +14,15 @@ const generateKeys = (before, after) => {
       if (before[key] === after[key]) {
         return { key, type: 'notChanged', value: after[key] };
       }
+      const isBeforeHasChildren = typeof before[key] === 'object';
+      const isAfterHasChildren = typeof after[key] === 'object';
+      if (isAfterHasChildren && isBeforeHasChildren) {
+        return {
+          key,
+          type: 'hasChildren',
+          children: generateKeys(before[key], after[key]),
+        };
+      }
       return {
         type: 'changed',
         key,
@@ -21,27 +31,6 @@ const generateKeys = (before, after) => {
       };
     });
   return [...commonKeys, ...removedKeys, ...addedKeys];
-};
-
-const render = (keys) => {
-  const strings = keys.map(({
-    type, key, value, afterValue,
-  }) => {
-    if (type === 'plus') {
-      return ` + ${key}: ${value}\n`;
-    }
-    if (type === 'minus') {
-      return ` - ${key}: ${value}\n`;
-    }
-    if (type === 'notChanged') {
-      return `   ${key}: ${value}\n`;
-    }
-    if (type === 'changed') {
-      return ` + ${key}: ${afterValue}\n - ${key}: ${value}\n`;
-    }
-    return null;
-  });
-  return `{\n${strings.join('')}}`;
 };
 
 const generateDifference = (firstConfig, secondConfig) => {

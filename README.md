@@ -21,3 +21,8 @@ npm -g install gendiff-saa
 ## ini
 
 [![asciicast](https://asciinema.org/a/M3BCp3Fu5IeJ4YQGEnFfezdBV.svg)](https://asciinema.org/a/M3BCp3Fu5IeJ4YQGEnFfezdBV)
+
+## complex file
+
+[![asciicast](https://asciinema.org/a/AdVlk5ZgVJUCW78XnUOI9J2nJ.svg)](https://asciinema.org/a/AdVlk5ZgVJUCW78XnUOI9J2nJ)
+
