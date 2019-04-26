@@ -15,13 +15,13 @@ const renderKeyValue = (sign, f) => (key, value, spaces, afterValue, children) =
   return stringifyKeyValue(key, value, spaces, sign);
 };
 
-const render = (keys, spaces = 0) => {
+const recursion = (keys, spaces = 0) => {
   const returns = {
     plus: renderKeyValue('+', stringifyKeyValue),
     minus: renderKeyValue('-', stringifyKeyValue),
     changed: renderKeyValue('', stringifyKeyValue),
     notChanged: renderKeyValue(' ', stringifyKeyValue),
-    hasChildren: renderKeyValue(' ', render),
+    hasChildren: renderKeyValue(' ', recursion),
   };
   const strings = keys.map(({
     type, key, value, afterValue, children,
@@ -29,4 +29,4 @@ const render = (keys, spaces = 0) => {
   return `{\n${strings.join('')}${' '.repeat(spaces)}}`;
 };
 
-export default render;
+export default recursion;
