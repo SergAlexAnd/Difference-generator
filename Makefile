@@ -19,6 +19,9 @@ run-yaml-nest:
 run-ini-nest:
 	npx babel-node src/bin/gendiff.js __tests__/__fixtures__/__nested__/after.ini __tests__/__fixtures__/__nested__/before.ini
 
+run-format-json:
+	npx babel-node src/bin/gendiff.js --format json __tests__/__fixtures__/__nested__/after.ini __tests__/__fixtures__/__nested__/before.ini
+
 publish: 
 	npm publish
 

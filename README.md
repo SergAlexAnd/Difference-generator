@@ -26,6 +26,10 @@ npm -g install gendiff-saa
 
 [![asciicast](https://asciinema.org/a/AdVlk5ZgVJUCW78XnUOI9J2nJ.svg)](https://asciinema.org/a/AdVlk5ZgVJUCW78XnUOI9J2nJ)
 
-## Plain format
+## Plain output
 
 [![asciicast](https://asciinema.org/a/BNt7TqlcphfMXkzXzlLuSLHQV.svg)](https://asciinema.org/a/BNt7TqlcphfMXkzXzlLuSLHQV)
+
+## JSON output
+
+[![asciicast](https://asciinema.org/a/awrL3q5ZGolooBKXjkQmAnLqT.svg)](https://asciinema.org/a/awrL3q5ZGolooBKXjkQmAnLqT)

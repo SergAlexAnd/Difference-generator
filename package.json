@@ -1,6 +1,6 @@
 {
   "name": "gendiff-saa",
-  "version": "0.5.1",
+  "version": "0.6.0",
   "description": "Hexlet project #2 Difference generator",
   "bin": {
     "gendiff": "dist/bin/gendiff.js"
