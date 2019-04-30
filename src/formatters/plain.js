@@ -11,20 +11,21 @@ const render = (keys, parent = '') => {
     const path = `${parent}${key}`;
     switch (type) {
       case 'plus':
-        return `Property '${path}' was added with value: ${renderValue(value)}\n`;
+        return `Property '${path}' was added with value: ${renderValue(value)}`;
       case 'minus':
-        return `Property '${path}' was removed\n`;
+        return `Property '${path}' was removed`;
       case 'changed':
-        return `Property '${path}' was updated. From ${renderValue(value)} to ${renderValue(afterValue)}\n`;
+        return `Property '${path}' was updated. From ${renderValue(value)} to ${renderValue(afterValue)}`;
       case 'hasChildren':
         return render(children, `${path}.`);
+      case 'notChanged':
+        return null;
       default:
-        break;
+        throw new Error('Invalid item type');
     }
-    return null;
-  });
+  }).filter(str => str !== null);
 
-  return `${strings.join('')}`;
+  return `${strings.join('\n')}`;
 };
 
 export default render;

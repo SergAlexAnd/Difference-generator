@@ -5,28 +5,27 @@ const renderValue = (value, spaces) => {
   return `{\n${valueKeys.join('')}${' '.repeat(spaces + 3)}}`;
 };
 
-const stringifyKeyValue = (key, value, spaces, sign) => `${' '.repeat(spaces)} ${sign} ${key}: ${renderValue(value, spaces)}\n`;
-
-const renderKeyValue = (sign, f) => (key, value, spaces, afterValue, children) => {
-  if (afterValue !== undefined) {
-    return `${f(key, afterValue, spaces, '+')}${f(key, value, spaces, '-')}`;
-  }
-  if (children !== undefined) return `${' '.repeat(spaces)} ${sign} ${key}: ${f(children, spaces + 3)}\n`;
-  return stringifyKeyValue(key, value, spaces, sign);
-};
-
-const recursion = (keys, spaces = 0) => {
-  const returns = {
-    plus: renderKeyValue('+', stringifyKeyValue),
-    minus: renderKeyValue('-', stringifyKeyValue),
-    changed: renderKeyValue('', stringifyKeyValue),
-    notChanged: renderKeyValue(' ', stringifyKeyValue),
-    hasChildren: renderKeyValue(' ', recursion),
-  };
+const render = (keys, spaces = 0) => {
   const strings = keys.map(({
     type, key, value, afterValue, children,
-  }) => returns[type](key, value, spaces, afterValue, children));
+  }) => {
+    const renderKeyValue = (sign, val) => `${' '.repeat(spaces)} ${sign} ${key}: ${renderValue(val, spaces)}\n`;
+    switch (type) {
+      case 'plus':
+        return renderKeyValue('+', value);
+      case 'minus':
+        return renderKeyValue('-', value);
+      case 'notChanged':
+        return renderKeyValue(' ', value);
+      case 'changed':
+        return `${renderKeyValue('+', afterValue)}${renderKeyValue('-', value)}`;
+      case 'hasChildren':
+        return `${' '.repeat(spaces + 3)}${key}: ${render(children, spaces + 3)}\n`;
+      default:
+        throw new Error('Invalid type');
+    }
+  });
   return `{\n${strings.join('')}${' '.repeat(spaces)}}`;
 };
 
-export default recursion;
+export default render;
