@@ -4,35 +4,35 @@ import fs from 'fs';
 import getParser from './parsers';
 import render from './formatters';
 
-const generateKeys = (before, after) => {
-  const beforeKeys = Object.keys(before);
-  const afterKeys = Object.keys(after);
+const generateAst = (beforeData, afterData) => {
+  const beforeKeys = Object.keys(beforeData);
+  const afterKeys = Object.keys(afterData);
   const allKeys = _.union(beforeKeys, afterKeys);
-  const astTree = allKeys.map((key) => {
-    const isBeforeHasKey = _.has(key, before);
-    const isAfterHasKey = _.has(key, after);
-    const isBeforeHasChildren = typeof before[key] === 'object';
-    const isAfterHasChildren = typeof after[key] === 'object';
-    if (isBeforeHasKey && !isAfterHasKey) return { type: 'minus', key, value: before[key] };
-    if (!isBeforeHasKey && isAfterHasKey) return { type: 'plus', key, value: after[key] };
-    if (before[key] === after[key]) return { key, type: 'notChanged', value: after[key] };
+  const ast = allKeys.map((key) => {
+    const isBeforeHasKey = _.has(key, beforeData);
+    const isAfterHasKey = _.has(key, afterData);
+    const isBeforeHasChildren = typeof beforeData[key] === 'object';
+    const isAfterHasChildren = typeof afterData[key] === 'object';
+    if (isBeforeHasKey && !isAfterHasKey) return { type: 'minus', key, value: beforeData[key] };
+    if (!isBeforeHasKey && isAfterHasKey) return { type: 'plus', key, value: afterData[key] };
+    if (beforeData[key] === afterData[key]) return { key, type: 'notChanged', value: afterData[key] };
     if (isAfterHasChildren && isBeforeHasChildren) {
-      return { key, type: 'hasChildren', children: generateKeys(before[key], after[key]) };
+      return { key, type: 'hasChildren', children: generateAst(beforeData[key], afterData[key]) };
     }
     return ({
-      type: 'changed', key, afterValue: after[key], value: before[key],
+      type: 'changed', key, afterValue: afterData[key], value: beforeData[key],
     });
   });
-  return _.sortBy('key')(astTree);
+  return _.sortBy('key')(ast);
 };
 
-const generateDifference = (firstConfigData, secondConfigData, format = 'recursion') => {
-  const parse = getParser(path.extname(firstConfigData));
-  const beforeContent = parse(fs.readFileSync(firstConfigData, 'UTF-8'));
-  const afterContent = parse(fs.readFileSync(secondConfigData, 'UTF-8'));
+const generateDifference = (firstConfigPath, secondConfigPath, format = 'recursion') => {
+  const parse = getParser(path.extname(firstConfigPath));
+  const beforeData = parse(fs.readFileSync(firstConfigPath, 'UTF-8'));
+  const afterData = parse(fs.readFileSync(secondConfigPath, 'UTF-8'));
   const renderFormat = render(format);
-  const generatedKeys = generateKeys(beforeContent, afterContent);
-  return renderFormat(generatedKeys);
+  const ast = generateAst(beforeData, afterData);
+  return renderFormat(ast);
 };
 
 export default generateDifference;
