@@ -10,9 +10,9 @@ const render = (keys, parent = '') => {
   }) => {
     const path = `${parent}${key}`;
     switch (type) {
-      case 'plus':
+      case 'added':
         return `Property '${path}' was added with value: ${renderValue(value)}`;
-      case 'minus':
+      case 'removed':
         return `Property '${path}' was removed`;
       case 'changed':
         return `Property '${path}' was updated. From ${renderValue(value)} to ${renderValue(afterValue)}`;

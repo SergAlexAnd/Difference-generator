@@ -1,3 +1,5 @@
+import _ from 'lodash';
+
 const renderValue = (value, spaces) => {
   const isObject = typeof value === 'object';
   if (!isObject) return value;
@@ -11,21 +13,21 @@ const render = (keys, spaces = 0) => {
   }) => {
     const renderKeyValue = (sign, val) => `${' '.repeat(spaces)} ${sign} ${key}: ${renderValue(val, spaces)}\n`;
     switch (type) {
-      case 'plus':
+      case 'added':
         return renderKeyValue('+', value);
-      case 'minus':
+      case 'removed':
         return renderKeyValue('-', value);
       case 'notChanged':
         return renderKeyValue(' ', value);
       case 'changed':
-        return `${renderKeyValue('+', afterValue)}${renderKeyValue('-', value)}`;
+        return [renderKeyValue('+', afterValue), renderKeyValue('-', value)];
       case 'hasChildren':
         return `${' '.repeat(spaces + 3)}${key}: ${render(children, spaces + 3)}\n`;
       default:
         throw new Error('Invalid type');
     }
   });
-  return `{\n${strings.join('')}${' '.repeat(spaces)}}`;
+  return `{\n${_.flattenDeep(strings).join('')}${' '.repeat(spaces)}}`;
 };
 
 export default render;
